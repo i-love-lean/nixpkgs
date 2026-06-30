@@ -22,7 +22,7 @@
 let
   lean4 = stdenv.mkDerivation (finalAttrs: {
     pname = "lean4";
-    version = "4.30.0";
+    version = "4.31.0";
 
     mimalloc-src = fetchFromGitHub {
       owner = "microsoft";
@@ -35,7 +35,7 @@ let
       owner = "leanprover";
       repo = "lean4";
       tag = "v${finalAttrs.version}";
-      hash = "sha256-YTsfIppd6km7wOjAxRH5KMPsW++ztFDCJT2up72J86Q=";
+      hash = "sha256-up4Juc/IyMuggGLMSDgwYEOoMk/K5U8NI0jzeAKqhO0=";
     };
 
     # Vendor mimalloc. Upstream has since partially adopted FetchContent:
@@ -54,9 +54,12 @@ let
         rm -rf src/lake/examples/git/
 
         substituteInPlace CMakeLists.txt \
-          --replace-fail 'GIT_REPOSITORY https://github.com/microsoft/mimalloc' \
-                         'SOURCE_DIR "${finalAttrs.mimalloc-src}"' \
-          --replace-fail 'GIT_TAG ${finalAttrs.mimalloc-src.tag}' ""
+          --replace-fail 'GIT_REPOSITORY https://github.com/microsoft/mimalloc' "" \
+          --replace-fail 'GIT_TAG ${finalAttrs.mimalloc-src.tag}' "" \
+          --replace-fail 'SOURCE_DIR
+' \
+                         'SOURCE_DIR "${finalAttrs.mimalloc-src}"
+'
         for file in stage0/src/CMakeLists.txt stage0/src/runtime/CMakeLists.txt src/CMakeLists.txt src/runtime/CMakeLists.txt; do
           substituteInPlace "$file" \
             --replace-fail '${pattern}' '${finalAttrs.mimalloc-src}'
