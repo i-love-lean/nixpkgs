@@ -13,6 +13,7 @@
   leangz,
   pkg-config,
   libuv,
+  openssl,
   perl,
   runCommand,
   writeText,
@@ -22,7 +23,7 @@
 let
   lean4 = stdenv.mkDerivation (finalAttrs: {
     pname = "lean4";
-    version = "4.30.0";
+    version = "4.32.0";
 
     mimalloc-src = fetchFromGitHub {
       owner = "microsoft";
@@ -35,12 +36,9 @@ let
       owner = "leanprover";
       repo = "lean4";
       tag = "v${finalAttrs.version}";
-      hash = "sha256-YTsfIppd6km7wOjAxRH5KMPsW++ztFDCJT2up72J86Q=";
+      hash = "sha256-eewJzEAjJs/gfqH2/IL5B0iUkNvVe6sMaIEIX+TWte4=";
     };
 
-    # Vendor mimalloc. Upstream has since partially adopted FetchContent:
-    # https://github.com/leanprover/lean4/commit/a145b9c11a0fe38fd4c921024a7376c99cc34bd2
-    #
     # Dynamically adjust the source tree to maintain a healthy boundary
     # with Nix and avoid overstepping on its jurisdiction over cache coherence.
     postPatch =
@@ -53,10 +51,6 @@ let
 
         rm -rf src/lake/examples/git/
 
-        substituteInPlace CMakeLists.txt \
-          --replace-fail 'GIT_REPOSITORY https://github.com/microsoft/mimalloc' \
-                         'SOURCE_DIR "${finalAttrs.mimalloc-src}"' \
-          --replace-fail 'GIT_TAG ${finalAttrs.mimalloc-src.tag}' ""
         for file in stage0/src/CMakeLists.txt stage0/src/runtime/CMakeLists.txt src/CMakeLists.txt src/runtime/CMakeLists.txt; do
           substituteInPlace "$file" \
             --replace-fail '${pattern}' '${finalAttrs.mimalloc-src}'
@@ -83,6 +77,7 @@ let
       gmp
       libuv
       cadical'
+      openssl
     ];
 
     nativeCheckInputs = [
@@ -96,6 +91,7 @@ let
       "-DINSTALL_CADICAL=OFF"
       "-DINSTALL_LEANTAR=OFF"
       "-DUSE_MIMALLOC=ON"
+      "-DFETCHCONTENT_SOURCE_DIR_MIMALLOC=${finalAttrs.mimalloc-src}"
     ];
 
     passthru.tests = {
