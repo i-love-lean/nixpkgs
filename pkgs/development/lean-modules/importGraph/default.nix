@@ -8,13 +8,13 @@
 buildLakePackage {
   pname = "lean4-importGraph";
   # nixpkgs-update: no auto update
-  version = "4.33.0-unstable-2026-08-10";
+  version = "4.34.0-unstable-2026-09-14";
 
   src = fetchFromGitHub {
     owner = "leanprover-community";
     repo = "import-graph";
-    rev = "16f02aa7642864af59f1ff0e384a015994db9118";
-    hash = "sha256-3rjLQXQX0mlAbr68zGC4pL9mrqJ7GFVaeJ8HJ2oM3pE=";
+    rev = "e928b72544873815af278d38681b31c0293588e3";
+    hash = "sha256-U3eskYuk2vJ35IJqBsIgOHKL03UHtlEriyssNkBxwjM=";
   };
 
   leanPackageName = "importGraph";

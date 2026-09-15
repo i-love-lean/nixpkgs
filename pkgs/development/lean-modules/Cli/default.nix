@@ -7,13 +7,13 @@
 buildLakePackage (finalAttrs: {
   pname = "lean4-cli";
   # nixpkgs-update: no auto update
-  version = "4.33.0";
+  version = "4.34.0";
 
   src = fetchFromGitHub {
     owner = "leanprover";
     repo = "lean4-cli";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-PVR9oekcGtx39GPyjN0sLHHAeeWpPGciOLzKNX5DelY=";
+    hash = "sha256-3HLYlycvm4Ho98pB7eF+u8RN1GQJ7Ve6COqMSZr4Hic=";
   };
 
   leanPackageName = "Cli";

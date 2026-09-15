@@ -7,13 +7,13 @@
 buildLakePackage {
   pname = "lean4-batteries";
   # nixpkgs-update: no auto update
-  version = "4.33.0-unstable-2026-08-10";
+  version = "4.34.0-unstable-2026-09-14";
 
   src = fetchFromGitHub {
     owner = "leanprover-community";
     repo = "batteries";
-    rev = "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d";
-    hash = "sha256-71DddBZmdR4wIdeSm9obApnqp0FgDPhqDsC3x/n9bVs=";
+    rev = "f2effa3d803fda822b1f97b806c47cf2adfbcbc2";
+    hash = "sha256-Y/Vfr3gVFfik2Rfshgu0iIn0IQYYCb6ShDt5nZe4RBc=";
   };
 
   leanPackageName = "batteries";
