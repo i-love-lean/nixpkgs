@@ -17,7 +17,7 @@ let
     in
     lib.switch rocq-core.rocq-version [
       # When updating the default version here, also update the VsRocq VS Code extension
-      (case (lib.versions.range "8.18" "9.1") "2.5.0")
+      (case (lib.versions.range "8.18" "9.2") "2.5.0")
     ] null;
   location = {
     domain = "github.com";
